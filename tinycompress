@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# TinyCompress 0.1
+# Author:  Mohammad Ebrahim Mohammadi Panah <ebrahim at mohammadi dot ir>
+# License: public domain
+
+BLOCK_SIZE=16384
+
+set -e
+
+in="${1:--}"
+
+base64 -w $BLOCK_SIZE "$in" | while read line
+do
+	query="GET /api-create.php?url=$line HTTP/1.0\r\nHost: tinyurl.com\r\n\r\n"
+	echo -en "$query" | netcat tinyurl.com 80 | sed -n 's!^http://tinyurl.com/\(.*\)!\1!p' | head -n 1 | tr -d '\r\n'
+	echo
+	echo -n . >&2
+done
+echo >&2

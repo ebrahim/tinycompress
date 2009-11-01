@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# TinyCompress 0.1
+# Author:  Mohammad Ebrahim Mohammadi Panah <ebrahim at mohammadi dot ir>
+# License: public domain
+
+set -e
+
+in="${1:--}"
+
+cat "$in" | while read key
+do
+	query="GET /$key HTTP/1.0\r\nHost: tinyurl.com\r\n\r\n"
+	echo -en "$query" | netcat tinyurl.com 80 | sed -n 's/^Location:\s*\(.*\)/\1/p' | head -n 1 | tr -d '\r'
+	echo -n . >&2
+done | base64 -d
+echo >&2
