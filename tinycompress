@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TinyCompress 0.1
-# Author:  Mohammad Ebrahim Mohammadi Panah <ebrahim at mohammadi dot ir>
+# Author:  Ebrahim Mohammadi <ebrahim at mohammadi dot ir>
 # License: public domain
 
 BLOCK_SIZE=16384
